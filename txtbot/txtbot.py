@@ -22,7 +22,6 @@ if __name__ == '__main__':
     args = vars(parser.parse_args())
 
     try:
-        print('Is DISCORD_TOKEN in environment variables? => ' + str("DISCORD_TOKEN" in os.environ))
         token = os.environ["DISCORD_TOKEN"]
 
     except KeyError:
@@ -37,6 +36,7 @@ if __name__ == '__main__':
         try:
             bot.load_extension(PATH_PLUGINDIR + "." + plugin)
             print(f'Loading plugin {plugin}...')
+
         except Exception as e:
             print(f'Failed to load plugin {plugin}.')
             traceback.print_exc()
