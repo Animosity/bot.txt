@@ -7,7 +7,6 @@ gunicorn==19.7.1
 heroku==0.1.4
 idna==2.6
 multidict==4.1.0
-pkg-resources==0.0.0
 python-dateutil==1.5
 requests==2.18.4
 urllib3==1.22
