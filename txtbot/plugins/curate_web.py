@@ -46,10 +46,12 @@ class Curate_Web():
             except (TypeError, KeyError):
                 print(raw_json)
 
-        else: print('raw bytes content')
+        else:
+            pass
 
     async def on_socket_raw_receive(self, msg):
-        await self.raw_reaction_handler(msg)
+        if list(self.bot.servers): #  >1 Server object exists (bot.is_logged in returns True before Server object exists!)
+            await self.raw_reaction_handler(msg)
 
     async def on_reaction_add(self, reaction, user):
         pass

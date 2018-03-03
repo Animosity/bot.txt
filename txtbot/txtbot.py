@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-import os, json, logging, traceback
+import argparse, os, json, logging, traceback
 from os import listdir
 from os.path import isfile, join
 
@@ -16,15 +16,22 @@ async def on_ready():
 
 if __name__ == '__main__':
     logging.basicConfig(filename='txtbot.log', level=logging.INFO)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-dt', '--discord-token', help='Discord Bot Token')
+    parser.add_argument('-k', '--keyfile', help='Relative path to keys.json', default='keys.json')
+    args = vars(parser.parse_args())
+
     try:
-        print("DISCORD_TOKEN" in os.environ)
+        print('Is DISCORD_TOKEN in environment variables? => ' + str("DISCORD_TOKEN" in os.environ))
         token = os.environ["DISCORD_TOKEN"]
 
     except KeyError:
         try:
-            token = json.load(open('../mykeys.json'))["DISCORD_TOKEN"]
+            if args['keyfile']:
+                token = json.load(open('../' + args['keyfile']))["DISCORD_TOKEN"]
+
         except(KeyError, FileNotFoundError):
-            logging.info('error loading DISCORD_TOKEN from../keys.json')
+            logging.info('error loading DISCORD_TOKEN from keyfile')
 
     for plugin in [f.replace('.py', '') for f in listdir(PATH_PLUGINDIR) if isfile(join(PATH_PLUGINDIR, f))]:
         try:
