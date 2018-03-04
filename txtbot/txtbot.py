@@ -35,10 +35,10 @@ if __name__ == '__main__':
     for plugin in [f.replace('.py', '') for f in listdir(PATH_PLUGINDIR) if isfile(join(PATH_PLUGINDIR, f))]:
         try:
             bot.load_extension(PATH_PLUGINDIR + "." + plugin)
-            print(f'Loading plugin {plugin}...')
+            print(f'Loading plugin: {plugin}...')
 
         except Exception as e:
-            print(f'Failed to load plugin {plugin}.')
+            print(f'Failed to load plugin: {plugin}.')
             traceback.print_exc()
 
 
