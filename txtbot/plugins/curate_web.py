@@ -13,30 +13,53 @@ db f
 
 """
 
-
 def namestr(obj, namespace):
     return [name for name in namespace if namespace[name] is obj]
+
 
 class Curate_Web():
     def __init__(self, bot):
         self.bot = bot
 
+    async def get_emoji_class(self, server, json_emoji):
+        """
+        Adapt raw socket data's emoji dict to Discord.py Emoji class
 
-    async def raw_reaction_handler(self, raw_msg):
+        :param json_emoji:
+        :return: discord.Emoji
+        """
+        print('entered ' + sys._getframe().f_code.co_name)
+        try:
+            emoji_obj = discord.Emoji(**{
+                'server': server,
+                "require_colons": True,
+                "managed": False,
+                "id": json_emoji["id"],
+                "name": json_emoji["name"],
+                "roles": None,
+            })
+            return emoji_obj
+        except:
+            traceback.print_exc()
+            return None
+
+
+    async def raw_reaction_handler(self, raw_msg, handled_events=None):
         print('entered ' + sys._getframe().f_code.co_name)
         """
         Necessary to handle raw socket events in case of bot downtime. Reaction and deletion events for messages
-         not in bot's Message queue will not be handled by the native event handlers.
+        not in bot's Message queue will not be handled by the native event handlers.
 
-         Need to construct and return enough context in discord.py's classes.
+        This function will construct and return enough context (using discord.py's classes) to callback functions.
 
         :param raw_msg:
-        :return:
+        :return function callback with reaction context
         """
         if type(raw_msg) is str:
             raw_json = json.loads(raw_msg)
             if not raw_json["t"]:
                 return
+
             try:
                 handled_events = {
                     "MESSAGE_REACTION_ADD": self.web_add_post,
@@ -44,32 +67,22 @@ class Curate_Web():
                 }
 
                 if raw_json["t"] in handled_events:
-                    print(json.dumps(raw_json, sort_keys=True, indent=4))
-
                     server = list(self.bot.servers)[0]  # TODO: support multiple server instances for web curator bot?
                     channel = server.get_channel(raw_json["d"]["channel_id"])
                     reaction_message = await self.bot.get_message(channel, raw_json["d"]["message_id"])
                     initiator_user = server.get_member(raw_json["d"]["user_id"])
-                    d_emoji = raw_json["d"]["emoji"]
+                    json_emoji = raw_json["d"]["emoji"]
+                    emoji = await self.get_emoji_class(server, json_emoji)
+                    reaction_obj = None
+
                     print(namestr(initiator_user, locals())[0] + '=' + initiator_user.id)
-                    context = (channel, reaction_message, initiator_user, d_emoji)
+                    context = (channel, reaction_message, initiator_user, emoji)
+                    print(json.dumps(raw_json, sort_keys=True, indent=4))
 
                     return await handled_events[raw_json["t"]](context)
 
                 else:
                     return
-                #  << Stone Age >>
-                """
-                
-                if raw_json["t"] == "MESSAGE_REACTION_ADD": 
-                    print(raw_json)
-
-                elif raw_json["t"] == "MESSAGE_REACTION_REMOVE": 
-                    print(raw_json)
-
-                elif raw_json["t"] == "MESSAGE_DELETE": web_edit_post
-                    print(raw_json)
-                """
 
             except (Exception):
                 traceback.print_exc()
