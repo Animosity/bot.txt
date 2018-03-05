@@ -7,6 +7,7 @@ class Simple():
 
     @commands.command(pass_context=True)
     async def cool(self, ctx):
+        await self.bot.send_typing(ctx.message.channel)
         await self.bot.send_message(ctx.message.channel, 'im cool 8-)')
 
 

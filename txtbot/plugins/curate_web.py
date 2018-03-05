@@ -73,7 +73,7 @@ class Curate_Web():
 
 
     async def raw_reaction_handler(self, raw_msg, handled_events):
-        print('entered ' + sys._getframe().f_code.co_name)
+        #print('entered ' + sys._getframe().f_code.co_name)
         if (handled_events is None) or (type(raw_msg) is not str):
             return
 
