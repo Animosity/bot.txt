@@ -28,20 +28,16 @@ class Overwatch():
                     sr = soup.find('div', attrs={'class': 'u-align-center h5'})
                     if sr:
                         response_markdown += (id + " SR = " + sr.string + "\r\n")
-                        #await self.bot.send_message(ctx.message.channel, id + ' SR = ' + sr.string)
 
                     else:
                         response_markdown += (id + " is still in placements\r\n")
-                        #await self.bot.send_message(ctx.message.channel, id + ' is still in placements')
 
                 else:
 
                     response_markdown += (id + " SR = *failed to get stats response*\r\n")
-                    #await self.bot.send_message(ctx.message.channel, id + ' SR = *failed to get stats response*')
 
             except:
                 traceback.print_exc()
-                #await self.bot.send_message(ctx.message.channel, id + ' *failed to get stats response*')
 
         response_markdown += "```"
         await self.bot.send_message(ctx.message.channel, response_markdown)
