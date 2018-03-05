@@ -33,7 +33,6 @@ class Overwatch():
                         response_markdown += (id + " is still in placements\r\n")
 
                 else:
-
                     response_markdown += (id + " SR = *failed to get stats response*\r\n")
 
             except:
