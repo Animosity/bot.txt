@@ -29,7 +29,7 @@ class Curate_Web():
         :param emoji: discord.Emoji object
         :return discord.Reaction object
         """
-        async def get_msg_reaction_count(): pass
+        async def get_msg_reaction_count(): pass #TODO: accurately represent the reaction count
 
         print('entered ' + sys._getframe().f_code.co_name)
         try:
@@ -146,11 +146,10 @@ class Curate_Web():
 
     async def web_add_post(self, context):
         print('entered '+ sys._getframe().f_code.co_name)
-        print(str(context))
 
     async def web_del_post(self, context):
         print('entered ' + sys._getframe().f_code.co_name)
-        print(str(context))
+
     async def web_edit_post(self, context):
         pass
 
