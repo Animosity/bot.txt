@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<h1>content.txt</h1>
+<div class=articles>
+    {% for article in get_latest_articles() %}
+    <div class=article-post>{{ article }}</div>
+    {% endfor %}
+</div>
