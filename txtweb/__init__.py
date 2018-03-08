@@ -4,7 +4,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 
 txtweb = Flask(__name__)
-txtweb.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
-db = SQLAlchemy(app)
+#txtweb.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+db = SQLAlchemy(txtweb)
 
 from txtweb import routes
