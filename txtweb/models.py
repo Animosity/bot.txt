@@ -1,4 +1,6 @@
 from manage import db,app
+from datetime import datetime
+from txtweb import db
 
 class Author(db.Model):
     __tablename__ = 'authors'
@@ -8,6 +10,7 @@ class Author(db.Model):
     email = db.Column(db.String(128), index=True, unique=True)
     avatar_uri = db.Column(db.String(256), index=False, unique=False)
     description = db.Column(db.String(1024), index=False, unique=False)
+    posts =
 
     def __repr__(self):
         return '<Author %r>' % (self.nickname)
