@@ -3,7 +3,6 @@ from discord.ext import commands
 import json, sys
 import traceback
 
-
 """
 On reaction ADD-POST
 db commit message ID, timestamp, author, upvoters
@@ -21,6 +20,8 @@ def namestr(obj, namespace):
 class Curate_Web():
     def __init__(self, bot):
         self.bot = bot
+        self.reaction_id_add_post = "331689850715766796"
+        self.reaction_id_del_post = "332911035751333888"
 
     async def get_reaction_class(self, message, emoji):
         """
@@ -146,9 +147,18 @@ class Curate_Web():
 
     async def web_add_post(self, context):
         print('entered '+ sys._getframe().f_code.co_name)
+        (channel, initiator_user, reaction) = context
+        print(reaction.emoji.id)
+        if reaction.emoji.id == self.reaction_id_add_post:
+            db = self.bot.db
+            author = self.bot.db.models.Author(nickname=initiator_user.name, discord_id=initiator_user.id)
+            if not self.bot.db.models.Author.query.filter(discord_id=)
+            article = self.bot.db.models.Article()
 
     async def web_del_post(self, context):
         print('entered ' + sys._getframe().f_code.co_name)
+        (channel, initiator_user, reaction) = context
+        print(reaction.emoji.id)
 
     async def web_edit_post(self, context):
         pass

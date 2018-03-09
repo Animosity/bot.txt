@@ -5,9 +5,9 @@ from os import listdir
 from os.path import isfile, join
 
 sys.path.append("..")
-from txtweb import db
+import txtweb
+from txtweb import db as txtwebdb
 
-print(db)
 PATH_PLUGINDIR = "plugins"
 
 bot = commands.Bot(command_prefix="!")
@@ -45,5 +45,6 @@ if __name__ == '__main__':
             print(f'Failed to load plugin: {plugin}.')
             traceback.print_exc()
 
-
+    bot.db = txtwebdb
+    bot.db.models = txtweb.models
     bot.run(token)
