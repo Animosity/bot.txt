@@ -3,7 +3,7 @@ from discord.ext import commands
 
 class Simple():
     def __init__(self, bot):
-        self.bot =ga bot
+        self.bot = bot
 
     @commands.command(pass_context=True)
     async def cool(self, ctx):

@@ -1,9 +1,13 @@
 import discord
 from discord.ext import commands
-import argparse, os, json, logging, traceback
+import argparse, os, json, logging, traceback, sys
 from os import listdir
 from os.path import isfile, join
 
+sys.path.append("..")
+from txtweb import db
+
+print(db)
 PATH_PLUGINDIR = "plugins"
 
 bot = commands.Bot(command_prefix="!")
