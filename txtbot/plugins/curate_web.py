@@ -1,7 +1,10 @@
 import discord
 from discord.ext import commands
-import json, sys
+import json, os, sys
 import traceback
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
 
 """
 On reaction ADD-POST
@@ -20,6 +23,11 @@ def namestr(obj, namespace):
 class Curate_Web():
     def __init__(self, bot):
         self.bot = bot
+        Session = sessionmaker()
+        engine = create_engine(os.environ['DATABASE_URL'])
+        Session.configure(bind=engine)
+        self.db_session = Session()
+        print(self.db_session)
         self.reaction_id_add_post = "331689850715766796"
         self.reaction_id_del_post = "332911035751333888"
 
@@ -151,9 +159,34 @@ class Curate_Web():
         print(reaction.emoji.id)
         if reaction.emoji.id == self.reaction_id_add_post:
             db = self.bot.db
-            author = self.bot.db.models.Author(nickname=initiator_user.name, discord_id=initiator_user.id)
-            if not self.bot.db.models.Author.query.filter(discord_id=)
-            article = self.bot.db.models.Article()
+            #author = self.db_session.query(self.bot.db.models.Author).filter_by(discord_id=initiator_user.id).first()
+
+
+            author = db.models.get_one_or_create(self.db_session, db.models.Author, **{
+                'nickname':  reaction.message.author.name,
+                'discord_id': reaction.message.author.id
+                }
+            )
+
+            curator = db.models.get_one_or_create(self.db_session, db.models.Curator, **{
+                'nickname': reaction.message.author.name,
+                'discord_id': reaction.message.author.id
+            }
+                                                 )
+            article = db.models.get_or_create(self.db_session, db.models.Article, **{
+                'discord_msg_id': reaction.message.id,
+                'content_markdown': reaction.message.content,
+                'author_id': reaction.message.author.id,
+                'timestamp': reaction.message.timestamp,
+                'curator_id': initiator_user.id
+                }
+            )
+            self.db_session.add(author)
+            self.db_session.add(article)
+            self.db_session.commit()
+
+            #if not db.models.Author.query.filter(discord_id=)
+            #article = db.models.Article()
 
     async def web_del_post(self, context):
         print('entered ' + sys._getframe().f_code.co_name)
