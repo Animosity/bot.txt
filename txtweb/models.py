@@ -55,7 +55,8 @@ class Article(db.Model):
     discord_msg_id = db.Column(db.String(128), index=True, unique=True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     title = db.Column('title', db.String(256))
-    content_markdown = db.Column('description', db.String(1024))
+    content_markdown = db.Column('content', db.String(1024))
+    visible = db.Column(db.Boolean)
 
     def __repr__(self):
         return '<Article %r>' % (self.title)

@@ -5,30 +5,22 @@ import traceback
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-
-"""
-On reaction ADD-POST
-db commit message ID, timestamp, author, upvoters
-
-On reaction DEL-POST
-db f
-
-"""
-
 def namestr(obj, namespace):
     return [name for name in namespace if namespace[name] is obj]
-    #usage example print(namestr(VAR_NAME, locals())[0] + '=' + VAR_NAME.property)
+    # usage example print(namestr(VAR_NAME, locals())[0] + '=' + VAR_NAME.property)
 
 
 class Curate_Web():
     def __init__(self, bot):
         self.bot = bot
         self.config = self.bot.config["CURATE_WEB"]
+
         # DB session init
         Session = sessionmaker()
         engine = create_engine(os.environ['DATABASE_URL'])
         Session.configure(bind=engine)
         self.db_session = Session()
+
         # Fetch plugin settings
         self.reaction_ids_add_post = self.config["REACTION_IDS_ADD_POST"]
         self.reaction_ids_del_post = self.config["REACTION_IDS_DEL_POST"]
@@ -41,9 +33,10 @@ class Curate_Web():
         :param emoji: discord.Emoji object
         :return discord.Reaction object
         """
+        print('entered ' + sys._getframe().f_code.co_name)
         async def get_msg_reaction_count(): pass #TODO: accurately represent the reaction count
 
-        print('entered ' + sys._getframe().f_code.co_name)
+
         try:
             reaction_obj = discord.Reaction(**{
                 'emoji': emoji,
@@ -85,10 +78,6 @@ class Curate_Web():
 
 
     async def raw_reaction_handler(self, raw_msg, handled_events):
-        #print('entered ' + sys._getframe().f_code.co_name)
-        if (handled_events is None) or (type(raw_msg) is not str):
-            return
-
         """
         Necessary to handle raw socket events in case of bot downtime. Reaction and deletion events for messages
         not in bot's Message queue will not be handled by the native event handlers.
@@ -107,6 +96,10 @@ class Curate_Web():
             e.g. context = (Discord.Message, Discord.User, Discord.Reaction)
                         
         """
+        # print('entered ' + sys._getframe().f_code.co_name)
+
+        if (handled_events is None) or (type(raw_msg) is not str):
+            return
 
         json_raw = json.loads(raw_msg)
         if not json_raw["t"]:
@@ -138,6 +131,7 @@ class Curate_Web():
     async def on_socket_raw_receive(self, msg):
 
         if list(self.bot.servers): #  >1 Server object exists (bot.is_logged in returns True before Server object exists!)
+            # Using raw_reaction_handler should be mutually exclusive with using the native reaction event handlers of discord.py
             await self.raw_reaction_handler(
                 msg,
                 {
@@ -146,22 +140,13 @@ class Curate_Web():
                 }
             )
 
-
-    async def on_reaction_add(self, reaction, user):
-        pass
-
-    async def on_reaction_remove(self, reaction, user):
-        pass
-
-    async def on_reaction_remove(self, reaction, user):
-        pass
-
     async def web_add_post(self, context):
         print('entered '+ sys._getframe().f_code.co_name)
         (channel, initiator_user, reaction) = context
-        print(str(reaction.emoji.id) + " " + reaction.emoji.name)
+        print("  emoji.id=" + str(reaction.emoji.id) + " " + reaction.emoji.name)
 
-        if reaction.emoji.id in self.reaction_ids_add_post:
+        # check for custom emoji id or name of built-in emoji matches
+        if (reaction.emoji.id or reaction.emoji.name) in self.reaction_ids_add_post:
             print('found add_post reaction match')
 
             db = self.bot.db
@@ -193,13 +178,13 @@ class Curate_Web():
             self.db_session.add(curator)
             self.db_session.commit()
 
-            #if not db.models.Author.query.filter(discord_id=)
-            #article = db.models.Article()
+        else:
+            return
 
     async def web_del_post(self, context):
         print('entered ' + sys._getframe().f_code.co_name)
         (channel, initiator_user, reaction) = context
-        print(reaction.emoji.id)
+        print("  emoji.id=" + str(reaction.emoji.id) + " " + reaction.emoji.name)
 
     async def web_edit_post(self, context):
         pass
