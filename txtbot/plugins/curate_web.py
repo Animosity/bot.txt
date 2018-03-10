@@ -144,42 +144,48 @@ class Curate_Web():
         print('entered '+ sys._getframe().f_code.co_name)
         (channel, initiator_user, reaction) = context
         print("  emoji.id=" + str(reaction.emoji.id) + " " + reaction.emoji.name)
+        try:
+            # check for custom emoji id or name of built-in emoji matches
+            if (reaction.emoji.id or reaction.emoji.name) in self.reaction_ids_add_post:
+                print('found add_post reaction match')
 
-        # check for custom emoji id or name of built-in emoji matches
-        if (reaction.emoji.id or reaction.emoji.name) in self.reaction_ids_add_post:
-            print('found add_post reaction match')
+                db = self.bot.db
+                # get_one_or_create() returns tuple of Query and Boolean
+                # anyone who has channel permission to Send Message can have their content curated
+                (author, author_existed) = db.models.get_one_or_create(self.db_session, db.models.Author, **{
+                    'nickname':  reaction.message.author.name,
+                    'discord_id': reaction.message.author.id
+                    }
+                )
 
-            db = self.bot.db
-            # get_one_or_create() returns tuple of Query and Boolean
-            # anyone who has channel permission to Send Message can have their content curated
-            (author, author_existed) = db.models.get_one_or_create(self.db_session, db.models.Author, **{
-                'nickname':  reaction.message.author.name,
-                'discord_id': reaction.message.author.id
+                # TODO: curators need to be authorized users OR not post to web unless >N curators have reacted
+                (curator, curator_existed) = db.models.get_one_or_create(self.db_session, db.models.Curator, **{
+                    'nickname': initiator_user.name,
+                    'discord_id': initiator_user.id
                 }
-            )
+                                                                                                       )
+                (article, article_existed) = db.models.get_one_or_create(self.db_session, db.models.Article, **{
+                    'discord_msg_id': reaction.message.id,
+                    'content_markdown': reaction.message.content,
+                    'author_id': author.id,  # the Author model primary key from
+                    'timestamp': reaction.message.timestamp,
+                    'curator_id': curator.id  # the Curator model primary key
+                    }
+                )
 
-            # TODO: curators need to be authorized users OR not post to web unless >N curators have reacted
-            (curator, curator_existed) = db.models.get_one_or_create(self.db_session, db.models.Curator, **{
-                'nickname': initiator_user.name,
-                'discord_id': initiator_user.id
-            }
-                                                                                                   )
-            (article, article_existed) = db.models.get_one_or_create(self.db_session, db.models.Article, **{
-                'discord_msg_id': reaction.message.id,
-                'content_markdown': reaction.message.content,
-                'author_id': author.id,  # the Author model primary key from
-                'timestamp': reaction.message.timestamp,
-                'curator_id': curator.id  # the Curator model primary key
-                }
-            )
-
-            self.db_session.add(author)
-            self.db_session.add(article)
-            self.db_session.add(curator)
-            self.db_session.commit()
-
-        else:
+                self.db_session.add(author)
+                self.db_session.add(article)
+                self.db_session.add(curator)
+                self.db_session.commit()
+                await self.bot.send_typing(reaction.message.channel)
+                await self.bot.add_reaction(reaction.message, "✅")
+            else:
+                return
+        except Exception:
+            traceback.print_exc()
             return
+
+
 
     async def web_del_post(self, context):
         print('entered ' + sys._getframe().f_code.co_name)
