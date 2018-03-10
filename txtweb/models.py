@@ -1,6 +1,7 @@
 from datetime import datetime
 from txtweb import db
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import IntegrityError
 
 def get_one_or_create(session,
                       model,
@@ -22,26 +23,26 @@ def get_one_or_create(session,
 
 class Author(db.Model):
     __tablename__ = 'authors'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.BigInteger, primary_key=True)
     nickname = db.Column(db.String(32), index=True, unique=True)
     discord_id = db.Column(db.String(128), index=True, unique=True)
     email = db.Column(db.String(128), index=True, unique=True)
     avatar_uri = db.Column(db.String(256), index=False, unique=False)
     description = db.Column(db.String(1024), index=False, unique=False)
-    posts = db.relationship('Article', backref='authors', lazy='dynamic')
+    posts = db.relationship('Article', backref='author', lazy='dynamic')
 
     def __repr__(self):
         return '<Author %r>' % (self.nickname)
 
 class Curator(db.Model):
     __tablename__ = 'curators'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.BigInteger, primary_key=True)
     nickname = db.Column(db.String(32), index=True, unique=True)
     discord_id = db.Column(db.String(128), index=True, unique=True)
     email = db.Column(db.String(128), index=True, unique=True)
     avatar_uri = db.Column(db.String(256), index=False, unique=False)
     description = db.Column(db.String(1024), index=False, unique=False)
-    posts = db.relationship('Article', backref='curators', lazy='dynamic')
+    posts = db.relationship('Article', backref='curator', lazy='dynamic')
 
     def __repr__(self):
         return '<Curator %r>' % (self.nickname)

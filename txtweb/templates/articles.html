@@ -5,8 +5,8 @@
 <h1>content.txt</h1>
 <div class=articles>
     {% for article in articles %}
-    <div class=article-post>{{ article }}</div>
-
+    <div class=article-post>{{ article.content_markdown }}</div>
+    <br>-- {{article.author.nickname}} <i>[curated by {{article.curator.nickname}}]</i>
     {% endfor %}
 
 {% endblock %}

@@ -7,5 +7,5 @@ def index():
 
 
 def _get_articles():
-    query = models.Article.select().order_by(models.Article.id.desc()).limit(10)
+    query = models.Article.query.order_by(models.Article.id.desc()).limit(10)
     return query

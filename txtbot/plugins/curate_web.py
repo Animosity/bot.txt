@@ -23,13 +23,16 @@ def namestr(obj, namespace):
 class Curate_Web():
     def __init__(self, bot):
         self.bot = bot
+        self.config = self.bot.config["CURATE_WEB"]
+        # DB session init
         Session = sessionmaker()
         engine = create_engine(os.environ['DATABASE_URL'])
         Session.configure(bind=engine)
         self.db_session = Session()
-        print(self.db_session)
-        self.reaction_id_add_post = "331689850715766796"
-        self.reaction_id_del_post = "332911035751333888"
+        # Fetch plugin settings
+        self.reaction_ids_add_post = self.config["REACTION_IDS_ADD_POST"]
+        self.reaction_ids_del_post = self.config["REACTION_IDS_DEL_POST"]
+
 
     async def get_reaction_class(self, message, emoji):
         """
@@ -156,33 +159,38 @@ class Curate_Web():
     async def web_add_post(self, context):
         print('entered '+ sys._getframe().f_code.co_name)
         (channel, initiator_user, reaction) = context
-        print(reaction.emoji.id)
-        if reaction.emoji.id == self.reaction_id_add_post:
+        print(str(reaction.emoji.id) + " " + reaction.emoji.name)
+
+        if reaction.emoji.id in self.reaction_ids_add_post:
+            print('found add_post reaction match')
+
             db = self.bot.db
-            #author = self.db_session.query(self.bot.db.models.Author).filter_by(discord_id=initiator_user.id).first()
-
-
-            author = db.models.get_one_or_create(self.db_session, db.models.Author, **{
+            # get_one_or_create() returns tuple of Query and Boolean
+            # anyone who has channel permission to Send Message can have their content curated
+            (author, author_existed) = db.models.get_one_or_create(self.db_session, db.models.Author, **{
                 'nickname':  reaction.message.author.name,
                 'discord_id': reaction.message.author.id
                 }
             )
 
-            curator = db.models.get_one_or_create(self.db_session, db.models.Curator, **{
-                'nickname': reaction.message.author.name,
-                'discord_id': reaction.message.author.id
+            # TODO: curators need to be authorized users OR not post to web unless >N curators have reacted
+            (curator, curator_existed) = db.models.get_one_or_create(self.db_session, db.models.Curator, **{
+                'nickname': initiator_user.name,
+                'discord_id': initiator_user.id
             }
-                                                 )
-            article = db.models.get_or_create(self.db_session, db.models.Article, **{
+                                                                                                   )
+            (article, article_existed) = db.models.get_one_or_create(self.db_session, db.models.Article, **{
                 'discord_msg_id': reaction.message.id,
                 'content_markdown': reaction.message.content,
-                'author_id': reaction.message.author.id,
+                'author_id': author.id,  # the Author model primary key from
                 'timestamp': reaction.message.timestamp,
-                'curator_id': initiator_user.id
+                'curator_id': curator.id  # the Curator model primary key
                 }
             )
+
             self.db_session.add(author)
             self.db_session.add(article)
+            self.db_session.add(curator)
             self.db_session.commit()
 
             #if not db.models.Author.query.filter(discord_id=)
