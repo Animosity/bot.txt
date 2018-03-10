@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<h1>content.txt</h1>
+<div class=articles>
+    {% for article in articles %}
+    <div class=article-post>{% filter markdown %}{{ article.content_markdown }}{% endfilter %}</div>
+    <br>-- {{article.author.nickname}} <i>[curated by {{article.curator.nickname}}]</i>
+    {% endfor %}
+
+{% endblock %}
+</div>

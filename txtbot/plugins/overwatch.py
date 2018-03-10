@@ -1,4 +1,5 @@
 from discord.ext import commands
+from discord import Game
 import sys, requests
 from bs4 import BeautifulSoup
 from pprint import pprint
@@ -13,8 +14,9 @@ class Overwatch():
     @commands.command(pass_context=True)
     async def sr(self, ctx):
         print('entered ' + sys._getframe().f_code.co_name)
+        await self.bot.change_presence(game=Game(name="Overwatch League", url="https://www.twitch.tv/overwatchleague", type=1))
 
-        response_markdown = "```css\r\n"
+        response_markdown = "```\r\n"
         for id in self.bnet_ids:
             await self.bot.send_typing(ctx.message.channel)
             try:
@@ -40,6 +42,7 @@ class Overwatch():
 
         response_markdown += "```"
         await self.bot.send_message(ctx.message.channel, response_markdown)
+        await self.bot.change_presence(game=None)
         return
 
 def setup(bot):
