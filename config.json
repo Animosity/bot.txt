@@ -1,10 +1,11 @@
 {
   "DISCORD_TOKEN": "",
   "CURATE_WEB": {
-    "REACTION_IDS_ADD_POST": [""],
-    "REACTION_IDS_DEL_POST": [""]
+    "REACTION_IDS_ADD_POST": ["331689850715766796"],
+    "REACTION_IDS_DEL_POST": ["⛔", "💩"]
   },
-  "OVERWATCH" : {
-    "BNET_IDS": [""]
+  "OVERWATCH": {
+    "BNET_IDS": ["reportwidow#1905", "reportwidow#1262", "User#1886", "SentrySteve#1915", "Animosity#1646", "Gazaar#1399"]
   }
+
 }
