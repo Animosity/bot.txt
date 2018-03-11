@@ -15,4 +15,5 @@ Markdown(txtweb)
 from txtweb import routes, models
 
 if __name__ == "__main__":
-    txtweb.run(host="0.0.0.0:24150")
+    port = int(os.environ.get('PORT', 5000))
+    txtweb.run(host="0.0.0.0", port=port)
