@@ -56,6 +56,7 @@ class Article(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     title = db.Column('title', db.String(256))
     content_markdown = db.Column('content', db.String(1024))
+    attachment = db.Column('attachment', db.String(512))
     visible = db.Column(db.Boolean)
 
     def __repr__(self):

@@ -1,13 +1,21 @@
 {% extends "index.html" %}
 
 {% block content %}
-
-<h1>content.txt</h1>
 <div class=articles>
     {% for article in articles %}
-    <div class=article-post>{% filter markdown %}{{ article.content_markdown }}{% endfilter %}</div>
-    <br>-- {{article.author.nickname}} <i>[curated by {{article.curator.nickname}}]</i>
+    <div class=article-post>
+        <p><h1>>> {{article.author.nickname}} @ {{moment(article.timestamp).calendar()}}</h1></p>
+        {% filter markdown %}
+        {{ article.content_markdown }}
+        {% endfilter %}
+        <br>
+        {% if article.attachment %}
+        <img src="{{article.attachment}}">
+        {% endif %}
+        <br>
+        <br>
+    </div>
     {% endfor %}
 
-{% endblock %}
 </div>
+{% endblock %}
