@@ -6,7 +6,7 @@ verify_ssl = true
 [packages]
 gunicorn = "*"
 flask = "*"
-
+python-dateutil = "2.6.1"
 
 [requires]
-python_version = "3.6"
+python_full_version = "3.6.3"
