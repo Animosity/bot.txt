@@ -172,11 +172,16 @@ class Curate_Web():
                     'curator_id': curator.id  # the Curator model primary key
                     }
                 )
+                if reaction.message.attachments != []:
+                    article.attachment = reaction.message.attachments[0]["url"]
+                    print(article.attachment)
 
                 self.db_session.add(author)
-                self.db_session.add(article)
                 self.db_session.add(curator)
+                self.db_session.add(article)
                 self.db_session.commit()
+                print("attachment=" + str(article.attachment))
+                print("timestamp=" + str(article.timestamp))
                 await self.bot.send_typing(reaction.message.channel)
                 await self.bot.add_reaction(reaction.message, "✅")
             else:
