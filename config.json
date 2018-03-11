@@ -3,5 +3,8 @@
   "CURATE_WEB": {
     "REACTION_IDS_ADD_POST": [""],
     "REACTION_IDS_DEL_POST": [""]
+  },
+  "OVERWATCH" : {
+    "BNET_IDS": [""]
   }
 }

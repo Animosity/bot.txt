@@ -51,6 +51,7 @@ class Curate_Web():
             traceback.print_exc()
             return None
 
+
     async def get_emoji_class(self, server, json_emoji):
         """
         Adapt raw socket data's emoji dict to Discord.py Emoji class
@@ -130,17 +131,20 @@ class Curate_Web():
 
     async def on_socket_raw_receive(self, msg):
 
-        if list(self.bot.servers): #  >1 Server object exists (bot.is_logged in returns True before Server object exists!)
-            # Using raw_reaction_handler should be mutually exclusive with using the native reaction event handlers of discord.py
+        #  >1 Server object exists (bot.is_logged in returns True before Server object exists!)
+        if list(self.bot.servers):
+            # Using raw_reaction_handler should be mutually exclusive with using the native
+            # reaction event handlers of discord.py
             await self.raw_reaction_handler(
                 msg,
                 {
-                    "MESSAGE_REACTION_ADD": self.web_add_post,
-                    "MESSAGE_REACTION_REMOVE": self.web_del_post,
+                    "MESSAGE_REACTION_ADD": self.cb_add_reaction,
+                    # "MESSAGE_REACTION_REMOVE": self.web_del_post,
                 }
             )
 
-    async def web_add_post(self, context):
+
+    async def cb_add_reaction(self, context):
         print('entered '+ sys._getframe().f_code.co_name)
         (channel, initiator_user, reaction) = context
         print("  emoji.id=" + str(reaction.emoji.id) + " " + reaction.emoji.name)
@@ -184,6 +188,38 @@ class Curate_Web():
                 print("timestamp=" + str(article.timestamp))
                 await self.bot.send_typing(reaction.message.channel)
                 await self.bot.add_reaction(reaction.message, "✅")
+
+            elif (reaction.emoji.id or reaction.emoji.name) in self.reaction_ids_del_post:
+                try:
+                    print('found add_post reaction match')
+
+                    db = self.bot.db
+                    await self.bot.send_typing(reaction.message.channel)
+                    await self.bot.add_reaction(reaction.message, "🛠")
+                    # get_one_or_create() returns tuple of Query and Boolean
+                    """
+                    (author, author_existed) = db.models.get_one_or_create(self.db_session, db.models.Author, **{
+                        'nickname':  reaction.message.author.name,
+                        'discord_id': reaction.message.author.id
+                        }
+                    )
+                    """
+                    article = self.db_session.query(db.models.Article).filter_by(discord_msg_id=reaction.message.id).first()
+                    print(str(article))
+
+                    if article is not None:
+                        self.db_session.delete(article)
+                        self.db_session.commit()
+
+                        await self.bot.send_message(reaction.message.channel,
+                                                    "```\r\n Deleted article written on {} by {}```".format(article.timestamp, reaction.message.author.name))
+                        await self.bot.remove_reaction(reaction.message, "✅", self.bot.user)
+
+                except Exception:
+                    traceback.print_exc()
+
+                finally:
+                    await self.bot.remove_reaction(reaction.message, "🛠", self.bot.user)
             else:
                 return
         except Exception:
@@ -191,14 +227,15 @@ class Curate_Web():
             return
 
 
-
     async def web_del_post(self, context):
         print('entered ' + sys._getframe().f_code.co_name)
         (channel, initiator_user, reaction) = context
         print("  emoji.id=" + str(reaction.emoji.id) + " " + reaction.emoji.name)
 
+
     async def web_edit_post(self, context):
         pass
+
 
 def setup(bot):
     bot.add_cog(Curate_Web(bot))

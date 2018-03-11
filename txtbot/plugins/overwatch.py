@@ -9,7 +9,8 @@ import traceback
 class Overwatch():
     def __init__(self, bot):
         self.bot = bot
-        self.bnet_ids = ["reportwidow#1905", "reportwidow#1262", "User#1886", "SentrySteve#1915", "Animosity#1646", "Gazaar#1399"]
+        self.config = self.bot.config["OVERWATCH"]
+        self.bnet_ids = self.config["BNET_IDS"]
 
     @commands.command(pass_context=True)
     async def sr(self, ctx):
