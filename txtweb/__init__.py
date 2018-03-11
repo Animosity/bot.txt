@@ -14,5 +14,4 @@ Markdown(txtweb)
 
 from txtweb import routes, models
 
-if __name__ == "__main__":
-    txtweb.run(host='0.0.0.0')
+
