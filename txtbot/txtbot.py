@@ -21,15 +21,15 @@ async def on_ready():
 if __name__ == '__main__':
     logging.basicConfig(filename='txtbot.log', level=logging.INFO)
     parser = argparse.ArgumentParser()
-    #parser.add_argument('-dt', '--discord-token', help='Discord Bot Token')
+    parser.add_argument('-dt', '--discord-token', help='Discord Bot Token')
     parser.add_argument('-c', '--config', help='Relative path to config.json', default='config.json')
     args = vars(parser.parse_args())
     bot.config = json.load(open('../' + args['config']))
 
     if args['config']:
         try:
-            #token = os.environ["DISCORD_TOKEN"]
-            token = bot.config["DISCORD_TOKEN"]
+            token = os.environ["DISCORD_TOKEN"]
+            #token = bot.config["DISCORD_TOKEN"]
 
         except(KeyError, FileNotFoundError):
             logging.info('error loading DISCORD_TOKEN from keyfile')
