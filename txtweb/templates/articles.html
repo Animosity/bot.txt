@@ -1,12 +1,10 @@
 {% extends "index.html" %}
 
 {% block content %}
-
-<h1>content.txt</h1>
 <div class=articles>
     {% for article in articles %}
     <div class=article-post>
-        <p>>> {{article.author.nickname}} @ {{moment(article.timestamp).calendar()}}</p>
+        <p><h1>>> {{article.author.nickname}} @ {{moment(article.timestamp).calendar()}}</h1></p>
         {% filter markdown %}
         {{ article.content_markdown }}
         {% endfilter %}

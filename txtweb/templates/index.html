@@ -1,20 +1,37 @@
-
-<!doctype html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 {% block scripts %}
 {{ moment.include_jquery() }}
 {{ moment.include_moment() }}
 {% endblock %}
 <head>
-    <title>website.txt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
+<!-- <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}"> -->
+<title>website.txt</title>
 </head>
 
-<!-- <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}"> -->
-    <body>
-        <div>.txt | <a href="/">home</a></div>
-            <hr>
-            {% block content %}
+<body>
+    <div id="page">
 
-            {% endblock %}
+        <div id="titlebar">
 
-    </body>
+        	<h1>website.txt - Notepad</h1>
+      </div>
+        <div id="bar">
+            <ul>
+                <li><a href="\">Home</a></li>
+                <li><a href="\">About</a></li>
+            </ul>
+      </div>
+        <div id="main">
+        {% block content %}
+
+        {% endblock %}
+
+        </div>
+        <!-- please leave my link somewhere in your page, that is all I ask -->
+        <div id="footer"><a href="http://www.bryantsmith.com">web page designer </a> <a href="http://www.bryantsmith.com">bryant smith</a></div>
+        </div>
+</body>
 </html>
