@@ -128,9 +128,8 @@ class Curate_Web():
             print(json.dumps(json_raw, sort_keys=True, indent=4))
             return
 
-
+    # TODO: make a generic reaction filter -> cb engine, emojis can drive other apps
     async def on_socket_raw_receive(self, msg):
-
         #  >1 Server object exists (bot.is_logged in returns True before Server object exists!)
         if list(self.bot.servers):
             # Using raw_reaction_handler should be mutually exclusive with using the native
@@ -147,7 +146,7 @@ class Curate_Web():
     async def cb_add_reaction(self, context):
         print('entered '+ sys._getframe().f_code.co_name)
         (channel, initiator_user, reaction) = context
-        print("  emoji.id=" + str(reaction.emoji.id) + " " + reaction.emoji.name)
+        print("  emoji.id & emoji.name=" + str(reaction.emoji.id) + " " + reaction.emoji.name)
         try:
             # check for custom emoji id or name of built-in emoji matches
             if (reaction.emoji.id or reaction.emoji.name) in self.reaction_ids_add_post:
@@ -162,7 +161,7 @@ class Curate_Web():
                     }
                 )
 
-                # TODO: curators need to be authorized users OR not post to web unless >N curators have reacted
+                # TODO: curators need to be authorized users AND/OR not post to web unless >N curators have reacted
                 (curator, curator_existed) = db.models.get_one_or_create(self.db_session, db.models.Curator, **{
                     'nickname': initiator_user.name,
                     'discord_id': initiator_user.id
@@ -176,19 +175,20 @@ class Curate_Web():
                     'curator_id': curator.id  # the Curator model primary key
                     }
                 )
+
                 if reaction.message.attachments != []:
                     article.attachment = reaction.message.attachments[0]["url"]
-                    print(article.attachment)
 
                 self.db_session.add(author)
                 self.db_session.add(curator)
                 self.db_session.add(article)
                 self.db_session.commit()
-                print("attachment=" + str(article.attachment))
-                print("timestamp=" + str(article.timestamp))
+
                 await self.bot.send_typing(reaction.message.channel)
                 await self.bot.add_reaction(reaction.message, "✅")
 
+
+            # Delete Message
             elif (reaction.emoji.id or reaction.emoji.name) in self.reaction_ids_del_post:
                 try:
                     print('found add_post reaction match')
@@ -205,14 +205,13 @@ class Curate_Web():
                     )
                     """
                     article = self.db_session.query(db.models.Article).filter_by(discord_msg_id=reaction.message.id).first()
-                    print(str(article))
 
                     if article is not None:
                         self.db_session.delete(article)
                         self.db_session.commit()
 
                         await self.bot.send_message(reaction.message.channel,
-                                                    "```\r\n Deleted article written on {} by {}```".format(article.timestamp, reaction.message.author.name))
+                                                    "```\r\n {} deleted article written on {} by {}```".format(initiator_user.name, article.timestamp, reaction.message.author.name))
                         await self.bot.remove_reaction(reaction.message, "✅", self.bot.user)
 
                 except Exception:
@@ -222,6 +221,7 @@ class Curate_Web():
                     await self.bot.remove_reaction(reaction.message, "🛠", self.bot.user)
             else:
                 return
+
         except Exception:
             traceback.print_exc()
             return
@@ -233,6 +233,7 @@ class Curate_Web():
         print("  emoji.id=" + str(reaction.emoji.id) + " " + reaction.emoji.name)
 
 
+    #TODO: update Article database with post edits
     async def web_edit_post(self, context):
         pass
 
