@@ -5,9 +5,7 @@
     {% for article in articles %}
     <div class=article-post>
         <p><h1>>> {{article.author.nickname}} @ {{moment(article.timestamp).calendar()}}</h1></p>
-        {% filter markdown %}
-        {{ article.content_markdown }}
-        {% endfilter %}
+        <p>{{ article.content_markdown|oembed(html=False, maxwidth=600, maxheight=600) }}</p>
         <br>
         {% if article.attachment %}
         <img src="{{article.attachment}}">
