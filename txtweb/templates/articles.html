@@ -4,7 +4,9 @@
 {{ moment.include_jquery() }}
 {{ moment.include_moment() }}
 {% endblock %}
-<head></head>
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
+</head>
 <div class=articles>
     {% for article in articles %}
     <div class=article-post>
