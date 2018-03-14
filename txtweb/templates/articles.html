@@ -5,7 +5,9 @@
 {{ moment.include_moment() }}
 {% endblock %}
 <head>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
+<style>
+body {background-color:white; margin:3px; font-family: "Lucida Console", Lucida Console, "Tahoma", "Trebuchet MS", Arial;}
+</style>
 </head>
 <div class=articles>
     {% for article in articles %}
