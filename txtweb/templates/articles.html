@@ -8,7 +8,7 @@
 <style>
 body {background-color:white; margin:3px; font-family: "Lucida Console", Lucida Console, "Tahoma", "Trebuchet MS", Arial;}
 
-#main h1
+#articles h1
 {
   font-family: "Lucida Console", Lucida Console, "Tahoma", "Trebuchet MS", Arial;
   font-size:13px;
@@ -17,7 +17,7 @@ body {background-color:white; margin:3px; font-family: "Lucida Console", Lucida 
 </head>
 <div class=articles>
     {% for article in articles %}
-    <div class=article-post>
+
         <p><h1>>> {{article.author.nickname}} @ {{moment(article.timestamp).calendar()}}</h1></p>
         <p>{{ article.content_markdown|oembed(html=False, maxwidth=600, maxheight=600) }}</p>
         <br>
@@ -26,7 +26,7 @@ body {background-color:white; margin:3px; font-family: "Lucida Console", Lucida 
         {% endif %}
         <br>
         <br>
-    </div>
+
     {% endfor %}
 
 </div>
