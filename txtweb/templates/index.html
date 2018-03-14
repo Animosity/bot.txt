@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 {% block scripts %}
 {{ moment.include_jquery() }}
 {{ moment.include_moment() }}
@@ -7,28 +6,48 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
-<!-- <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}"> -->
+
 <title>website.txt</title>
 </head>
-
 <body>
-    <div id="page">
-
-        <div id="titlebar">
-
-        	<h1>website.txt - Notepad</h1>
-      </div>
-        <div id="bar">
-            <ul>
-                <li><a href="\">Home</a></li>
-                <li><a href="\">About</a></li>
-            </ul>
-      </div>
-        <div id="main">
-
+<div id=page>
+<table cellspacing=0 cellpadding=0 align=center>
+<tr>
+  <td background={{ url_for('static', filename='styles/images/titlebar-left.png') }} width=250 height=29><div id=titlebar><h1>website.txt - Notepad</h1></div></td>
+  <td background={{ url_for('static', filename='styles/images/titlebar-mid.png') }} height=29></td>
+  <td background={{ url_for('static', filename='styles/images/titlebar-right.png') }} width=74 height=29><div id=titlebarright></div></td>
+</tr>
+</table>
+<table align=center cellspacing=0 cellpadding=0>
+<tr>
+  <td background={{ url_for('static', filename='styles/images/menubar-left.png') }} width=4></td>
+  <td background={{ url_for('static', filename='styles/images/menubar-mid.png') }} height=2>
+        <div id=bar>
+	<ul>
+	<li><a href="/articles.html" target=content>Home</a></li>
+	<li><a href="about.html" target=content>About</a></li>
+	</ul>
         </div>
-        <!-- please leave my link somewhere in your page, that is all I ask -->
-        <div id="footer"><a href="http://www.bryantsmith.com">web page designer </a> <a href="http://www.bryantsmith.com">bryant smith</a></div>
-        </div>
+  </td>
+  <td background={{ url_for('static', filename='styles/images/menubar-right.png') }} width=4></td>
+</tr>
+</table>
+<table height=75% cellspacing=0 cellpadding=0 align=center>
+<tr>
+  <td background={{ url_for('static', filename='styles/images/notepad-back-left.png') }} width=5></td>
+  <td bgcolor=#ffffff>
+  <iframe id="CONTENT" width=100% height=100% name=content frameborder=0 src="articles.html"></iframe>
+
+
+  </td>
+  <td background={{ url_for('static', filename='styles/images/notepad-back-right.png') }} width=5></td>
+</tr>
+<tr>
+  <td background={{ url_for('static', filename='styles/images/footer-left.png') }} height=5></td>
+  <td background={{ url_for('static', filename='styles/images/footer-mid.png') }} height=5></td>
+  <td background={{ url_for('static', filename='styles/images/footer-right.png') }} height=5></td>
+</tr>
+</table>
+</div>
 </body>
 </html>

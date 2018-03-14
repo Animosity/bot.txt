@@ -6,6 +6,11 @@ text-align: center;
 }
 p {text-align: left;}
 
+table {
+width:75%;
+min-width:274px;
+}
+
 body {
 	margin: 0;
 	padding: 0;
@@ -13,7 +18,7 @@ body {
 	font-family:  Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	color: #F1F5F8;
-  background: #26476E url(background.png) repeat-x;
+  background: #26476E url(images/background.png) repeat-x;
 }
 *
 {
@@ -24,56 +29,44 @@ body {
 {
   margin: 0 auto 0 auto; 
   margin-top:25px;
+  margin-bottom:25px;
   display: block; 
   height:auto;
   position: relative; 
-  overflow: hidden; 
-  width: 614px;
 }
 
 #titlebar
 {
-background-image:url(titlebar.png);
-background-repeat:no-repeat;
-height:30px;
-width:614px;
-overflow:hidden;
+min-width:200px;
 }
-
-
-
 
 #titlebar h1
 {
 padding-left:21px;
 margin-top:8px;
 margin-left:5px;
-width:510px;
+margin-bottom:5px;
 position:relative;
 color:#FFFFFF;
 text-align:left;
 font-size:14px;
 font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-background-image:url(icon.png); /*change the icon here */
+background-image:url(images/icon.png); /*change the icon here */
 background-repeat:no-repeat;
-overflow:hidden;
 }
 
-
-
+#titlebarright
+{
+min-width:74px;
+}
 
 #bar
 {
-background-image:url(menu.png);
-background-repeat:no-repeat;
-height:39px;
-width:610px;
-
-padding-left:4px;
 text-align:left;
 font-family:Tahoma, "Tahoma", "Trebuchet MS", Arial;
-font-size:11px;
+font-size:10px;
 }
+
 
 #bar ul {
 	padding: 0px;
@@ -114,7 +107,7 @@ background:#316AC5;
 
   width: 579px;
   padding-top:0px;
-  padding-left:7px;
+  padding-left:4px;
   padding-right:28px;
   font-family: "Lucida Console", Lucida Console, "Tahoma", "Trebuchet MS", Arial;
   background-image:url(notepad_back.png);
