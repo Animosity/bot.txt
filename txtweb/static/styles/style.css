@@ -6,11 +6,6 @@ text-align: center;
 }
 p {text-align: left;}
 
-table {
-width:75%;
-min-width:274px;
-}
-
 body {
 	margin: 0;
 	padding: 0;
@@ -27,25 +22,49 @@ body {
 
 #page
 {
-  margin: 0 auto 0 auto; 
-  margin-top:25px;
-  margin-bottom:25px;
-  display: block; 
-  height:auto;
-  position: relative; 
+margin: 0 auto 0 auto;
+margin-top:25px;
+display: block;
+height:auto;
+position: relative;
+overflow: hidden;
+width: 50%;
+min-width:400px;
 }
 
-#titlebar
+#titlebarleft
 {
-min-width:200px;
+background-image:url(images/titlebar-left.png);
+background-repeat:no-repeat;
+height:29px;
+width:250px;
+overflow:hidden;
+float:left;
 }
 
-#titlebar h1
+#titlebarmid
+{
+background-image:url(images/titlebar-mid.png);
+height:29px;
+overflow:hidden;
+}
+
+#titlebarright
+{
+background-image:url(images/titlebar-right.png);
+background-repeat:no-repeat;
+height:29px;
+width:74px;
+overflow:hidden;
+float:right;
+}
+
+#titlebarleft h1
 {
 padding-left:21px;
 margin-top:8px;
 margin-left:5px;
-margin-bottom:5px;
+width:250px;
 position:relative;
 color:#FFFFFF;
 text-align:left;
@@ -53,94 +72,138 @@ font-size:14px;
 font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 background-image:url(images/icon.png); /*change the icon here */
 background-repeat:no-repeat;
+overflow:hidden;
 }
 
-#titlebarright
+#menubarleft
 {
-min-width:74px;
+background-image:url(images/menubar-left.png);
+background-repeat:no-repeat;
+height:21px;
+width:4px;
+float:left;
 }
 
-#bar
+#menubarmid
 {
+background-image:url(images/menubar-mid.png);
+height:21px;
+width:100%;
+padding-left:4px;
 text-align:left;
 font-family:Tahoma, "Tahoma", "Trebuchet MS", Arial;
-font-size:10px;
+font-size:11px;
+}
+
+#menubarright
+{
+background-image:url(images/menubar-right.png);
+background-repeat:no-repeat;
+height:21px;
+width:4px;
+float:right;
+}
+
+#menubarmid ul {
+padding: 0px;
+list-style-type: none;
+height:21px;
+}
+#menubarmid ul li , #menubarmid ul li a, #menubarmid ul li a:visited{
+height:21px;
+margin: 0px;
+padding: 5px;
+padding-left:2px;
+padding-right:2px;
+height: 21px;
+overflow: hidden;
+display: inline;
+text-align:center;
+line-height:18px;
+color:#000000;
+text-decoration:none;
 }
 
 
-#bar ul {
-	padding: 0px;
-	list-style-type: none;
-	height:21px;
-	text-align:left;
-}
-#bar ul li , #bar ul li a, #bar ul li a:visited{
-	height:21px;
-	margin: 0px;
-	padding: 5px;
-	padding-left:2px;
-	padding-right:2px;
-	height: 21px;
-	overflow: hidden;
-	display: inline;
-	text-align:center;
-	line-height:18px;
-	color:#000000;
-
-	text-decoration:none;
-}
-
-
-#bar ul li a:hover
+#menubarmid ul li a:hover
 {
 color:#FFFFFF;
 }
 
-#bar ul li:hover
+#menubarmid ul li:hover
 {
 height:21px;
 background:#316AC5;
 }
 
+#mainleft
+{
+background-image:url(images/notepad-back-left.png);
+background-repeat:repeat-y;
+width:5px;
+height:400px;
+float:left;
+}
+
 #main
 {
-
-  width: 579px;
-  padding-top:0px;
-  padding-left:4px;
-  padding-right:28px;
-  font-family: "Lucida Console", Lucida Console, "Tahoma", "Trebuchet MS", Arial;
-  background-image:url(notepad_back.png);
-  background-repeat:repeat-y;
-  color:#000000;
+padding-top:0px;
+padding-left:3px;
+padding-right:28px;
+font-family: "Lucida Console", Lucida Console, "Tahoma", "Trebuchet MS", Arial;
+background-color:white;
+color:#000000;
+overflow: scroll;
+height:400px;
 }
 
-
-#footer
+#mainright
 {
-padding-top:6px;
-background-image:url(footer.png);
+background-image:url(images/notepad-back-right.png);
+background-repeat:repeat-y;
+height:400px;
+width:5px;
+float:right;
+}
+
+#footerleft
+{
+background-image:url(images/footer-left.png);
 background-repeat:no-repeat;
-height:39px;
-width:614px;
-overflow:hidden;
-text-align:center;
-font-size:9px;
-color:#E2E2E0;
+height:6px;
+width:5px;
+float:left;
 }
-#footer a, #footer a:visited, #footer a:hover
+
+#footermid
 {
-font-size:9px;
+background-image:url(images/footer-mid.png);
+height:6px;
+width:100%;
+padding-left:4px;
+text-align:left;
+font-family:Tahoma, "Tahoma", "Trebuchet MS", Arial;
+font-size:11px;
+}
+#footermid a, #footermid a:visited, #footermid a:hover
+{
+font-size:6px;
 color:#E2E2E0;
 }
 
-
-#footer a:hover
+#footermid a:hover
 {
 color:#BCBCBC;
 }
 
-
+#footerright
+{
+background-image:url(images/footer-right.png);
+background-repeat:no-repeat;
+height:6px;
+width:5px;
+float:right;
+}
 
 html, body {
 text-align: center;
@@ -166,6 +229,6 @@ color:#999999;
 
 #main h1
 {
-  font-family: "Lucida Console", Lucida Console, "Tahoma", "Trebuchet MS", Arial;
-  font-size:13px;
+font-family: "Lucida Console", Lucida Console, "Tahoma", "Trebuchet MS", Arial;
+font-size:13px;
 }

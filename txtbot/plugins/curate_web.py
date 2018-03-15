@@ -210,8 +210,7 @@ class Curate_Web():
                         self.db_session.delete(article)
                         self.db_session.commit()
 
-                        await self.bot.send_message(reaction.message.channel,
-                                                    "```\r\n {} deleted article written on {} by {}```".format(initiator_user.name, article.timestamp, reaction.message.author.name))
+                        await self.bot.send_message(reaction.message.channel,"```\r\n {} deleted article written on {} by {}```".format(initiator_user.name, article.timestamp, reaction.message.author.name))
                         await self.bot.remove_reaction(reaction.message, "✅", self.bot.user)
 
                 except Exception:
