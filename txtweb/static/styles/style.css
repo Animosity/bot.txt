@@ -141,7 +141,7 @@ background:#316AC5;
 background-image:url(images/notepad-back-left.png);
 background-repeat:repeat-y;
 width:5px;
-height:400px;
+height:700px;
 float:left;
 }
 
@@ -154,14 +154,14 @@ font-family: "Lucida Console", Lucida Console, "Tahoma", "Trebuchet MS", Arial;
 background-color:white;
 color:#000000;
 overflow: scroll;
-height:400px;
+height:700px;
 }
 
 #mainright
 {
 background-image:url(images/notepad-back-right.png);
 background-repeat:repeat-y;
-height:400px;
+height:700px;
 width:5px;
 float:right;
 }
