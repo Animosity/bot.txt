@@ -7,8 +7,6 @@ text-align: center;
 p {text-align: left;}
 
 body {
-	margin: 0;
-	padding: 0;
 	background: #697281;
 	font-family:  Arial, Helvetica, sans-serif;
 	font-size: 13px;
@@ -17,19 +15,17 @@ body {
 }
 *
 {
-  margin: 0 auto 0 auto;
+ margin: 0 auto 0 auto;
  text-align:left;}
 
-#page
+.page
 {
 margin: 0 auto 0 auto;
 margin-top:25px;
-display: block;
-height:auto;
-position: relative;
-overflow: hidden;
+height:700px;
 width: 65%;
 min-width:400px;
+display: table;
 }
 
 #titlebarleft
@@ -70,7 +66,7 @@ color:#FFFFFF;
 text-align:left;
 font-size:14px;
 font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-background-image:url(images/icon.png); /*change the icon here */
+background-image:url(images/icon.png);
 background-repeat:no-repeat;
 overflow:hidden;
 }
@@ -88,7 +84,6 @@ float:left;
 {
 background-image:url(images/menubar-mid.png);
 height:21px;
-width:100%;
 padding-left:4px;
 text-align:left;
 font-family:Tahoma, "Tahoma", "Trebuchet MS", Arial;
@@ -139,9 +134,8 @@ background:#316AC5;
 #mainleft
 {
 background-image:url(images/notepad-back-left.png);
-background-repeat:repeat-y;
 width:5px;
-height:700px;
+height:inherit;
 float:left;
 }
 
@@ -154,14 +148,13 @@ font-family: "Lucida Console", Lucida Console, "Tahoma", "Trebuchet MS", Arial;
 background-color:white;
 color:#000000;
 overflow: scroll;
-height:700px;
+height:inherit;
 }
 
 #mainright
 {
 background-image:url(images/notepad-back-right.png);
-background-repeat:repeat-y;
-height:700px;
+height:inherit;
 width:5px;
 float:right;
 }
@@ -179,21 +172,6 @@ float:left;
 {
 background-image:url(images/footer-mid.png);
 height:6px;
-width:100%;
-padding-left:4px;
-text-align:left;
-font-family:Tahoma, "Tahoma", "Trebuchet MS", Arial;
-font-size:11px;
-}
-#footermid a, #footermid a:visited, #footermid a:hover
-{
-font-size:6px;
-color:#E2E2E0;
-}
-
-#footermid a:hover
-{
-color:#BCBCBC;
 }
 
 #footerright
