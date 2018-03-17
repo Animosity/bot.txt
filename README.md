@@ -1,4 +1,6 @@
 # bot.txt
+![notepad](https://i.imgur.com/7hEVKCs.png)
+
 .txt  community website (www.dottxt.com) content management via Discord
 
 ## What: 
