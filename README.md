@@ -7,7 +7,7 @@
 This project was started as a novel Discord server bot (backend: [discord.py](https://github.com/Rapptz/discord.py)) to perform web content curation thru Discord Reactions (emojis) applied to chat messages.
 
 ## How: 
-In order to accomplish this, I wrote a [complete replacement](https://github.com/Animosity/bot.txt/blob/master/txtbot/plugins/curate_web.py) of discord.py's native Reaction event handlers for robustness.
+In order to accomplish this, I wrote a [complete replacement](https://github.com/Animosity/bot.txt/blob/master/txtbot/plugins/curate_web.py#L81) of discord.py's native Reaction event handlers for robustness.
 
 It was necessary due to a specific limitation in discord.py: Reactions upon messages which the bot instance did not witness, are not recognized by its native event handler. For programmers who are using Heroku or similar service which may suspend their processes, this is not satisfactory for the purpose of curating web content based upon chat _history_.
 
