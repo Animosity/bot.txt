@@ -2,7 +2,7 @@
 .txt  community website (www.dottxt.com) content management via Discord
 
 ## What: 
-This project was started as a novel Discord server bot (backend: discord.py) to perform web content curation thru Discord Reactions (emojis) applied to chat messages.
+This project was started as a novel Discord server bot (backend: [discord.py](https://github.com/Rapptz/discord.py)) to perform web content curation thru Discord Reactions (emojis) applied to chat messages.
 
 ## How: 
 In order to accomplish this, a complete replacement of discord.py's native Reaction event handlers had to be created in order to provide a more robust implementation of curation (adds and deletes).
