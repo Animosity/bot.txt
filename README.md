@@ -12,7 +12,7 @@ To solve this, the raw socket event handler is used to parse the Reaction events
 
 Basic feedback is returned to the user in the form of additional Reactions applied to the message being curated, for example a hammer&wrench emoji is added to message when the bot recognizes a supported Reaction emoji has been added/removed to a chat message by the user. When the associated task is completed, the hammer&wrench emoji is then removed from the message.
 
-When a task is successfully completed (such as adding a new web post), a checkmark Reaction is applied to the associated message by the bot.
+When a task is __successfully__ completed (such as adding a new web post), a checkmark Reaction is applied to the associated message by the bot.
 
 A basic microblog is implemented in Flask to retrieve and render the curated web content from a PostgreSQL database which is populated with the curated content, from the server bot.
 
