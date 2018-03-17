@@ -18,6 +18,5 @@ A basic microblog is implemented in Flask to retrieve and render the curated web
 
 
 
-TODO:
-* Start new repo for the custom Reaction handler for all to easily re-use
-* Example GIFs
+# TODO:
+* [project kanban](https://github.com/Animosity/bot.txt/projects/1)
