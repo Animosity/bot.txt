@@ -65,7 +65,7 @@ class Article(db.Model):
 class GameHistory(db.Model):
     __tablename__ = 'gamehistory'
     id = db.Column(db.Integer, primary_key=True)
-    player_id =  db.Column(db.BigInteger =True, index=True)
+    player_id =  db.Column(db.BigInteger, index=True)
     time_started = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     time_stopped = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     duration_hours = db.Column(db.BigInteger, primary_key=True)
