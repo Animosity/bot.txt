@@ -226,6 +226,8 @@ class Curate_Web():
             traceback.print_exc()
             return
 
+        finally:
+            await self.bot.remove_reaction(reaction.message, "🛠", self.bot.user)
 
     async def web_del_post(self, context):
         print('entered ' + sys._getframe().f_code.co_name)
