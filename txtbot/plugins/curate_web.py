@@ -151,7 +151,7 @@ class Curate_Web():
             # check for custom emoji id or name of built-in emoji matches
             if (reaction.emoji.id or reaction.emoji.name) in self.reaction_ids_add_post:
                 print('found add_post reaction match')
-                await self.bot.add_reaction(reaction.message, "🛠", self.bot.user)
+                await self.bot.add_reaction(reaction.message, "🛠")
 
                 db = self.bot.db
                 # get_one_or_create() returns tuple of Query and Boolean
