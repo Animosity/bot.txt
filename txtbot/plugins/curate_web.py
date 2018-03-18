@@ -151,6 +151,7 @@ class Curate_Web():
             # check for custom emoji id or name of built-in emoji matches
             if (reaction.emoji.id or reaction.emoji.name) in self.reaction_ids_add_post:
                 print('found add_post reaction match')
+                await self.bot.add_reaction(reaction.message, "🛠", self.bot.user)
 
                 db = self.bot.db
                 # get_one_or_create() returns tuple of Query and Boolean
@@ -183,7 +184,7 @@ class Curate_Web():
                 self.db_session.add(curator)
                 self.db_session.add(article)
                 self.db_session.commit()
-
+                await self.bot.send_message(reaction.message.author, "{} has curated your post: {}".format(initiator_user.name, reaction.message.content))
                 await self.bot.send_typing(reaction.message.channel)
                 await self.bot.add_reaction(reaction.message, "✅")
 
