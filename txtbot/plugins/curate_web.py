@@ -184,7 +184,7 @@ class Curate_Web():
                 self.db_session.add(curator)
                 self.db_session.add(article)
                 self.db_session.commit()
-                await self.bot.send_message(reaction.message.author, "{} has curated your post: {}".format(initiator_user.name, reaction.message.content))
+                await self.bot.send_message(reaction.message.author, "{} has curated your post in {}: {}".format(initiator_user.name, reaction.message.channel.name, reaction.message.content))
                 await self.bot.send_typing(reaction.message.channel)
                 await self.bot.add_reaction(reaction.message, "✅")
 
