@@ -18,6 +18,11 @@ body {
  margin: 0 auto 0 auto;
  text-align:left;}
 
+img
+{
+max-width:100%;
+}
+
 .page
 {
 margin: 0 auto 0 auto;
