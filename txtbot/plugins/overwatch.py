@@ -21,8 +21,8 @@ class Overwatch():
         for id in self.bnet_ids:
             await self.bot.send_typing(ctx.message.channel)
             try:
-                stats_url = 'https://playoverwatch.com/en-us/career/{platform}/{region}/{battle_tag}'
-                stats_url = stats_url.format(platform='pc', region='us', battle_tag=id.replace('#', '-'))
+                stats_url = 'https://playoverwatch.com/en-us/career/{platform}/{battle_tag}'
+                stats_url = stats_url.format(platform='pc', battle_tag=id.replace('#', '-'))
 
                 result = requests.get(stats_url)
 
