@@ -1,14 +1,15 @@
 import discord
 from discord.ext import commands
 
-class Simple():
+
+class Simple(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command(pass_context=True)
     async def cool(self, ctx):
-        await self.bot.send_typing(ctx.message.channel)
-        await self.bot.send_message(ctx.message.channel, 'im cool 8-)')
+        async with ctx.typing():
+            await ctx.send('im cool 8-)')
 
 
 def setup(bot):
