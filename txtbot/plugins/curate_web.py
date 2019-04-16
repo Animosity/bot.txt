@@ -151,6 +151,7 @@ class Curate_Web():
             # check for custom emoji id or name of built-in emoji matches
             if (reaction.emoji.id or reaction.emoji.name) in self.reaction_ids_add_post:
                 print('found add_post reaction match')
+                await self.bot.add_reaction(reaction.message, "🛠")
 
                 db = self.bot.db
                 # get_one_or_create() returns tuple of Query and Boolean
@@ -183,7 +184,7 @@ class Curate_Web():
                 self.db_session.add(curator)
                 self.db_session.add(article)
                 self.db_session.commit()
-
+                await self.bot.send_message(reaction.message.author, "{} has curated your post in {}: {}".format(initiator_user.name, reaction.message.channel.name, reaction.message.content))
                 await self.bot.send_typing(reaction.message.channel)
                 await self.bot.add_reaction(reaction.message, "✅")
 
@@ -225,6 +226,8 @@ class Curate_Web():
             traceback.print_exc()
             return
 
+        finally:
+            await self.bot.remove_reaction(reaction.message, "🛠", self.bot.user)
 
     async def web_del_post(self, context):
         print('entered ' + sys._getframe().f_code.co_name)
