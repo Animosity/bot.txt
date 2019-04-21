@@ -2,11 +2,9 @@ from discord.ext import commands
 import asyncio
 import requests
 import json
-import os
 
-configfile = os.path.join(os.path.dirname(__file__), '..', '..', 'config.json')
-with open(configfile, 'r') as infile:
-    data = json.load(infile)
+configfile = '../' + 'config.json'
+data = json.load(open(configfile))
 default_fiat = data["CRYPTOTICKER"]["DEFAULT_FIAT"]
 url = data["CRYPTOTICKER"]["URL"]
 
