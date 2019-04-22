@@ -34,7 +34,7 @@ class Overwatch(commands.Cog):
                             response_markdown += (id + " SR = " + sr.string + "\r\n")
 
                         else:
-                            response_markdown += (id + " is still in placements\r\n")
+                            response_markdown += (id + " is in placements or private profile\r\n")
 
                     else:
                         response_markdown += (id + " SR = *failed to get stats response*\r\n")
