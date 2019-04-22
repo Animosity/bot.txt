@@ -52,30 +52,6 @@ class Curate_Web(commands.Cog):
             traceback.print_exc()
             return None
 
-    async def get_emoji_class(self, server, json_emoji):
-        """
-        Adapt raw socket data's emoji dict to Discord.py Emoji class
-
-        :param server: discord.Server instance associated with the reaction event
-        :param json_emoji: the 'd" dictionary from the raw socket event json
-
-        :return: discord.Emoji object
-        """
-        print('entered ' + sys._getframe().f_code.co_name)
-        try:
-            emoji_obj = discord.Emoji(**{
-                'server': server,
-                "require_colons": True,
-                "managed": False,
-                "id": json_emoji["id"],
-                "name": json_emoji["name"],
-                "roles": None,
-            })
-            return emoji_obj
-
-        except:
-            traceback.print_exc()
-            return None
 
     async def raw_reaction_handler(self, payload, handled_events):
         """
@@ -99,8 +75,6 @@ class Curate_Web(commands.Cog):
             channel = server.get_channel(payload.channel_id)
             reaction_message = await channel.fetch_message(payload.message_id)
             initiator_user = server.get_member(payload.user_id)
-            # json_emoji = json_raw["d"]["emoji"]
-            # emoji = await self.get_emoji_class(server, json_emoji)
             emoji = payload.emoji
             reaction = await self.get_reaction_class(reaction_message, emoji)
             print(reaction)
