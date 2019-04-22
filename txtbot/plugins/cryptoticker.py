@@ -47,8 +47,8 @@ class CryptoTicker(commands.Cog):
 
                     async with ctx.typing():
                         await asyncio.sleep(1)
-                        await ctx.send('Changing default fiat currency to ' + newfiat.upper())
-                        print(f'[Reloading extension: CryptoTicker] Config update: default_fiat is now ' + newfiat.upper())
+                        await ctx.send(f'Changing default fiat currency to {newfiat.upper()}')
+                        print(f'[Reloading CryptoTicker] Config update: default_fiat is now {newfiat.upper()}')
                         await ctx.message.add_reaction('\N{THUMBS UP SIGN}')
 
                 except Exception as error:
