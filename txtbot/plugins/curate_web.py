@@ -128,11 +128,12 @@ class Curate_Web(commands.Cog):
         print('entered ' + sys._getframe().f_code.co_name)
         (channel, initiator_user, reaction) = context
         print("  emoji.id & emoji.name=" + str(reaction.emoji.id) + " " + reaction.emoji.name)
+
         try:
             # check for custom emoji id or name of built-in emoji matches
-            if (reaction.emoji.id or reaction.emoji.name) in self.reaction_ids_add_post:
+            if (reaction.emoji.id or str(reaction.emoji.id) or reaction.emoji.name) in self.reaction_ids_add_post:
                 print('found add_post reaction match')
-                await self.bot.add_reaction(reaction.message, "🛠")
+                await reaction.message.add_reaction("🛠")
 
                 db = self.bot.db
                 # get_one_or_create() returns tuple of Query and Boolean
@@ -175,7 +176,8 @@ class Curate_Web(commands.Cog):
 
 
             # Delete Message
-            elif (reaction.emoji.id or reaction.emoji.name) in self.reaction_ids_del_post:
+            elif (reaction.emoji.name in self.reaction_ids_del_post) or (reaction.emoji.id in self.reaction_ids_del_post):
+                print("wtf ok")
                 try:
                     print('found del_post reaction match')
 
@@ -205,13 +207,14 @@ class Curate_Web(commands.Cog):
                                                     "```\r\n {} deleted article written on {} by {}```".format(
                                                         initiator_user.name, article.timestamp,
                                                         reaction.message.author.name))
-                        await reaction.message.remove_reaction("✅", self.bot.user)
+                        #await reaction.message.remove_reaction("✅", self.bot.user)
 
                 except Exception:
                     traceback.print_exc()
 
                 finally:
-                    await reaction.message.remove_reaction("🛠", self.bot.user)
+                    pass
+                    #await reaction.message.remove_reaction("🛠", self.bot.user)
             else:
                 return
 
