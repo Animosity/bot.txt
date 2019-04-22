@@ -131,7 +131,7 @@ class Curate_Web(commands.Cog):
 
         try:
             # check for custom emoji id or name of built-in emoji matches
-            if (reaction.emoji.id or str(reaction.emoji.id) or reaction.emoji.name) in self.reaction_ids_add_post:
+            if (reaction.emoji.id  in self.reaction_ids_add_post) or (reaction.emoji.id in self.reaction_ids_add_post):
                 print('found add_post reaction match')
                 await reaction.message.add_reaction("🛠")
 
