@@ -177,7 +177,6 @@ class Curate_Web(commands.Cog):
 
             # Delete Message
             elif (reaction.emoji.name in self.reaction_ids_del_post) or (reaction.emoji.id in self.reaction_ids_del_post):
-                print("wtf ok")
                 try:
                     print('found del_post reaction match')
 
