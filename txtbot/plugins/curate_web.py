@@ -171,19 +171,18 @@ class Curate_Web(commands.Cog):
                                                                                         reaction.message.channel.name,
                                                                                         reaction.message.content))
                 ctx = await self.bot.get_context(reaction.message)
-                async with ctx.typing():
-                    await reaction.message.add_reaction("✅")
+                await ctx.message.add_reaction("✅")
 
 
             # Delete Message
             elif (reaction.emoji.name in self.reaction_ids_del_post) or (reaction.emoji.id in self.reaction_ids_del_post):
                 try:
-                    print('found del_post reaction match')
+                    print(f'found del_post reaction match {reaction.message}')
 
                     db = self.bot.db
                     ctx = await self.bot.get_context(reaction.message)
-                    async with ctx.typing():
-                        await reaction.message.add_reaction("🛠")
+                    await ctx.message.add_reaction("🛠")
+
                     # await self.bot.send_typing(reaction.message.channel)
                     # await self.bot.add_reaction(reaction.message, "🛠")
 
@@ -206,14 +205,13 @@ class Curate_Web(commands.Cog):
                                                     "```\r\n {} deleted article written on {} by {}```".format(
                                                         initiator_user.name, article.timestamp,
                                                         reaction.message.author.name))
-                        #await reaction.message.remove_reaction("✅", self.bot.user)
+                        await reaction.message.remove_reaction("✅", self.bot.user)
 
                 except Exception:
                     traceback.print_exc()
 
                 finally:
-                    pass
-                    #await reaction.message.remove_reaction("🛠", self.bot.user)
+                    await reaction.message.remove_reaction("🛠", self.bot.user)
             else:
                 return
 
