@@ -38,7 +38,7 @@ class CryptoTicker(commands.Cog):
         if newbase in supported_currencies_list:
             for cryptoticker in this_extension:
                 try:
-                    data["CRYPTOTICKER"]["DEFAULT_BASE"] = newbase.lower()
+                    data["CRYPTOTICKER"]["BASE_CURRENCY"] = newbase.lower()
                     with open(configfile, 'w') as updatedconfigfile:
                         json.dump(data, updatedconfigfile, indent=2, sort_keys=False, ensure_ascii=False)
 
@@ -72,7 +72,7 @@ class CryptoTicker(commands.Cog):
                 if ticker == coin['symbol']:
                     ticker = coin['id']
 
-            response = requests.get(url + ticker + '&vs_currency=' + base_currency)
+            response = requests.get(url + ticker + '&vs_currency=' + base)
             fetched = response.json()
             symbol = fetched[0]['symbol']
             current_price = fetched[0]['current_price']
