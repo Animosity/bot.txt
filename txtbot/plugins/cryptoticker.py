@@ -12,6 +12,10 @@ coin_list_url = data["CRYPTOTICKER"]["COIN_LIST"]
 coin_fetch = requests.get(coin_list_url)
 coin_list = coin_fetch.json()
 
+supported_currencies_url = data["CRYPTOTICKER"]["SUPPORTED_CURRENCIES"]
+supported_currencies_fetch = requests.get(supported_currencies_url)
+supported_currencies_list = supported_currencies_fetch.json()
+
 this_extension = ['plugins.cryptoticker']
 
 
@@ -31,27 +35,34 @@ class CryptoTicker(commands.Cog):
 
     @commands.command(pass_context=True)
     async def setfiat(self, ctx, newfiat):
-        for cryptoticker in this_extension:
-            try:
-                data["CRYPTOTICKER"]["DEFAULT_FIAT"] = newfiat.lower()
-                with open(configfile, 'w') as updatedconfigfile:
-                    json.dump(data, updatedconfigfile, indent=2, sort_keys=False, ensure_ascii=False)
+        if newfiat in supported_currencies_list:
+            for cryptoticker in this_extension:
+                try:
+                    data["CRYPTOTICKER"]["DEFAULT_FIAT"] = newfiat.lower()
+                    with open(configfile, 'w') as updatedconfigfile:
+                        json.dump(data, updatedconfigfile, indent=2, sort_keys=False, ensure_ascii=False)
 
-                self.bot.unload_extension(cryptoticker)
-                self.bot.load_extension(cryptoticker)
+                    self.bot.unload_extension(cryptoticker)
+                    self.bot.load_extension(cryptoticker)
 
-                async with ctx.typing():
-                    await asyncio.sleep(1)
-                    await ctx.send('Changing default fiat currency to ' + newfiat.upper())
-                    print(f'[Reloading extension: CryptoTicker] Config update: default_fiat is now ' + newfiat.upper())
-                    await ctx.message.add_reaction('\N{THUMBS UP SIGN}')
+                    async with ctx.typing():
+                        await asyncio.sleep(1)
+                        await ctx.send('Changing default fiat currency to ' + newfiat.upper())
+                        print(f'[Reloading extension: CryptoTicker] Config update: default_fiat is now ' + newfiat.upper())
+                        await ctx.message.add_reaction('\N{THUMBS UP SIGN}')
 
-            except Exception as error:
-                async with ctx.typing():
-                    await asyncio.sleep(1)
-                    await ctx.send(f'setfiat command returned with error: {error}')
-                    print(f'setfiat command returned with error: {error}')
-                    await ctx.message.add_reaction('\N{THUMBS DOWN SIGN}')
+                except Exception as error:
+                    async with ctx.typing():
+                        await asyncio.sleep(1)
+                        await ctx.send(f'setfiat command returned with error: {error}')
+                        print(f'setfiat command returned with error: {error}')
+                        await ctx.message.add_reaction('\N{THUMBS DOWN SIGN}')
+        else:
+            async with ctx.typing():
+                await asyncio.sleep(1)
+                await ctx.send(f'CryptoTicker Error: {newfiat} is not a supported currency')
+                print(f'CryptoTicker Error: {newfiat} is not a supported currency')
+                await ctx.message.add_reaction('\N{THUMBS DOWN SIGN}')
 
     @commands.command(pass_context=True)
     async def price(self, ctx, ticker, fiat: str = default_fiat):
