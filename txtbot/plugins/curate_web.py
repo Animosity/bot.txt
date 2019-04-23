@@ -77,9 +77,8 @@ class Curate_Web(commands.Cog):
             initiator_user = server.get_member(payload.user_id)
             emoji = payload.emoji
             reaction = await self.get_reaction_class(reaction_message, emoji)
-            print(reaction)
-            context = (channel, initiator_user, reaction)
 
+            context = (channel, initiator_user, reaction)
             return await handled_events(context)
 
         except (Exception):
@@ -101,7 +100,7 @@ class Curate_Web(commands.Cog):
     async def cb_add_reaction(self, context):
         print('entered ' + sys._getframe().f_code.co_name)
         (channel, initiator_user, reaction) = context
-        print("  emoji.id & emoji.name=" + str(reaction.emoji.id) + " " + reaction.emoji.name)
+        print("  emoji.id={}& emoji.name={}".format(str(reaction.emoji.id), str(reaction.emoji.name)))
 
         try:
             # check for custom emoji id or name of built-in emoji matches
