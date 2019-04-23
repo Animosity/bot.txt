@@ -8,7 +8,6 @@ class CryptoTicker(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.config = self.bot.config["CRYPTOTICKER"]
-        self.bot.configpath = '../' + 'config.json'
 
         self.base_currency = self.config["BASE_CURRENCY"]
         self.url = self.config["URL"]
