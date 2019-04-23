@@ -71,10 +71,7 @@ class CryptoTicker(commands.Cog):
         if base is None:
             base = self.base_currency
 
-        if base.upper() in currency_symbol_dict:
-            currency_symbol = currency_symbol_dict[base.upper()]
-        else:
-            currency_symbol = '$'
+        currency_symbol = currency_symbol_dict.get(base.upper(), '$')
 
         ticker = ticker.lower()
         base = base.lower()
