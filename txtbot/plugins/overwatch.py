@@ -54,7 +54,7 @@ class Overwatch(commands.Cog):
         try:
             async with ctx.typing():
                 for tag in self.bnet_ids:
-                        stats_url = 'https://ow-api.com/v1/stats/pc/usa/{battle_tag}/profile5'
+                        stats_url = 'https://ow-api.com/v1/stats/pc/usa/{battle_tag}/profile'
                         stats_url = stats_url.format(battle_tag=tag.replace('#', '-'))
 
                         result = requests.get(stats_url)
