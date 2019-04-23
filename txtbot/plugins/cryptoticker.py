@@ -67,7 +67,7 @@ class CryptoTicker(commands.Cog):
 
         base = base.lower()
 
-        if ticker in self.supported_currencies and base in self.supported_currencies:
+        if base in self.supported_currencies:
             try:
                 for coin in self.coin_list:
                     if ticker == coin['symbol']:
