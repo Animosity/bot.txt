@@ -1,11 +1,28 @@
 {
   "DISCORD_TOKEN": "",
   "CURATE_WEB": {
-    "REACTION_IDS_ADD_POST": ["331689850715766796"],
-    "REACTION_IDS_DEL_POST": ["⛔", "💩"]
+    "REACTION_IDS_ADD_POST": [
+      "331689850715766796"
+    ],
+    "REACTION_IDS_DEL_POST": [
+      "⛔",
+      "💩"
+    ]
   },
   "OVERWATCH": {
-    "BNET_IDS": ["reportwidow#1905", "reportwidow#1262", "User#1886", "SentrySteve#1915", "Animosity#1646", "Gazaar#1399"]
+    "BNET_IDS": [
+      "reportwidow#1905",
+      "reportwidow#1262",
+      "User#1886",
+      "SentrySteve#1915",
+      "Animosity#1646",
+      "Gazaar#1399"
+    ]
+  },
+  "CRYPTOTICKER": {
+    "BASE_CURRENCY": "usd",
+    "URL": "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=",
+    "COIN_LIST": "https://api.coingecko.com/api/v3/coins/list",
+    "SUPPORTED_CURRENCIES": "https://api.coingecko.com/api/v3/simple/supported_vs_currencies"
   }
-
 }

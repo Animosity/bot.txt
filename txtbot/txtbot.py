@@ -24,7 +24,8 @@ if __name__ == '__main__':
     parser.add_argument('-dt', '--discord-token', help='Discord Bot Token')
     parser.add_argument('-c', '--config', help='Relative path to config.json', default='config.json')
     args = vars(parser.parse_args())
-    bot.config = json.load(open('../' + args['config']))
+    bot.configpath = '../' + args['config']
+    bot.config = json.load(open(bot.configpath))
 
     if args['config']:
         try:
