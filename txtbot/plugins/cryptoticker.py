@@ -93,7 +93,7 @@ class CryptoTicker(commands.Cog):
         else:
             async with ctx.typing():
                 await asyncio.sleep(1)
-                await ctx.send(f'{ticker} or {base} is not a supported currency')
+                await ctx.send(f'CryptoTicker error: {base} is not a supported currency')
                 await ctx.message.add_reaction('\N{THUMBS DOWN SIGN}')
 
 
