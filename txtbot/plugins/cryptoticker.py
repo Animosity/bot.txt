@@ -9,11 +9,13 @@ class CryptoTicker(commands.Cog):
         self.bot = bot
         self.config = self.bot.config["CRYPTOTICKER"]
         self.bot.configpath = '../' + 'config.json'
-        self.this_extension = ['plugins.cryptoticker']
+
         self.base_currency = self.config["BASE_CURRENCY"]
         self.url = self.config["URL"]
         self.coin_list = requests.get(self.config["COIN_LIST"]).json()
         self.supported_currencies = requests.get(self.config["SUPPORTED_CURRENCIES"]).json()
+
+        self.this_extension = ['plugins.cryptoticker']
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
