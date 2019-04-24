@@ -13,7 +13,7 @@ class Clancy(commands.Cog):
         file = random.choice(CLANCY_FILES) + ".xhtml"
 
         try:
-            with open(f".//plugins//resources//clancybot//{file}",'r') as handle:
+            with open(f".//plugins//resources//clancy//{file}",'r') as handle:
                 data = handle.read()
                 soup = BeautifulSoup(data)
 
