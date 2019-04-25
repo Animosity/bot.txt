@@ -55,7 +55,7 @@ class CryptoTicker(commands.Cog):
             except Exception as error:
                 async with ctx.typing():
                     await asyncio.sleep(1)
-                    await ctx.send(f'basecurrency command returned with error: {error.tr}')
+                    await ctx.send(f'basecurrency command returned with error: {error}')
                     print(f'basecurrency command returned with error: {error}')
                     await ctx.message.add_reaction('\N{THUMBS DOWN SIGN}')
 
