@@ -37,11 +37,9 @@ class TwitStream(commands.Cog):
             profile_image = x[0]["user"]["profile_image_url_https"]
 
             e = discord.Embed()
-            e.set_image(url=profile_image)
+            e.set_thumbnail(url=profile_image)
             e.add_field(name=date_string, value=x[numvar]["text"], inline=True)
             e.set_author(name=f'@{x[0]["user"]["screen_name"]}')
-
-            print(profile_image)
 
             async with ctx.typing():
                 await asyncio.sleep(1)
@@ -63,7 +61,7 @@ class TwitStream(commands.Cog):
         e.set_thumbnail(url=profile_image)
         e.add_field(name=date_string, value=x[numvar]["full_text"], inline=True)
         e.set_author(name=f'@{x[0]["user"]["screen_name"]}')
-        e.set_footer(text=f'Requested by: {ctx.message.author}')
+
         async with ctx.typing():
             await asyncio.sleep(1)
             await ctx.send(embed=e)

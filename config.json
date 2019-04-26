@@ -24,5 +24,11 @@
     "URL": "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=",
     "COIN_LIST": "https://api.coingecko.com/api/v3/coins/list",
     "SUPPORTED_CURRENCIES": "https://api.coingecko.com/api/v3/simple/supported_vs_currencies"
+  },
+  "TWITSTREAM": {
+    "CONSUMER_KEY": "",
+    "CONSUMER_SECRET": "",
+    "TOKEN_KEY": "",
+    "TOKEN_SECRET": ""
   }
 }
