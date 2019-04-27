@@ -73,6 +73,7 @@ class Curate_Web(commands.Cog):
         try:
             server = list(self.bot.guilds)[0]  # TODO: support multiple server instances for web curator bot?
             channel = server.get_channel(payload.channel_id)
+            if channel is None: print(f"{server} -- {channel} -- {payload}")
             reaction_message = await channel.fetch_message(payload.message_id)
             initiator_user = server.get_member(payload.user_id)
             emoji = payload.emoji

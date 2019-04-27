@@ -1,5 +1,6 @@
 import random
 from bs4 import BeautifulSoup
+from discord.activity import Game
 from discord.ext import commands
 
 CLANCY_FILES = ['index_split_001','index_split_002','index_split_003','index_split_004', 'index_split_005','index_split_006','index_split_007','index_split_008', 'index_split_009', 'index_split_010', 'index_split_011']
@@ -27,6 +28,8 @@ class Clancy(commands.Cog):
 
     @commands.command(pass_context=True)
     async def clancy(self, ctx):
+        activity = Game(name='my Rainbow Six Siege')
+        await self.bot.change_presence(activity=activity)
         async with ctx.typing():
             response = await self.fetch_line()
             await ctx.send(response)
