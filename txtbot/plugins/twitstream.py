@@ -18,28 +18,26 @@ class TwitStream(commands.Cog):
         self.t = Twitter(auth=OAuth(self.token_key, self.token_secret, self.consumer_key, self.consumer_secret))
 
     @commands.command(pass_context=True)
-    async def tweet(self, ctx, screen_name, count=None):
+    async def twit(self, ctx, screen_name, count=None):
         if count is None:
             count = 1
 
-        if int(count) > 100:
+        if int(count) > 150:
             async with ctx.typing():
                 await asyncio.sleep(1)
-                await ctx.send('wow too much bro')
+                await ctx.send('[TwitStream Error]: Too many tweets requested')
                 await ctx.message.add_reaction('\N{THUMBS DOWN SIGN}')
         else:
-            numvar = int(count) - 1
-            x = self.t.statuses.user_timeline(screen_name=screen_name, count=count)
+            num = int(count) - 1
+            data = self.t.statuses.user_timeline(screen_name=screen_name, count=count)
 
-            date_string = datetime.strptime(x[numvar]["created_at"], '%a %b %d %H:%M:%S %z %Y').replace(
+            date_string = datetime.strptime(data[num]["created_at"], '%a %b %d %H:%M:%S %z %Y').replace(
                 tzinfo=timezone.utc).astimezone(tz=None).strftime('%I:%M:%S %m-%d-%y')
 
-            profile_image = x[0]["user"]["profile_image_url_https"]
-
             e = discord.Embed()
-            e.set_thumbnail(url=profile_image)
-            e.add_field(name=date_string, value=x[numvar]["text"], inline=True)
-            e.set_author(name=f'@{x[0]["user"]["screen_name"]}')
+            e.set_thumbnail(url=data[0]["user"]["profile_image_url"])
+            e.add_field(name=date_string, value=data[num]["text"], inline=True)
+            e.set_author(name=f'@{data[0]["user"]["screen_name"]}')
 
             async with ctx.typing():
                 await asyncio.sleep(1)
@@ -49,18 +47,16 @@ class TwitStream(commands.Cog):
     @commands.command(pass_context=True)
     async def trump(self, ctx):
         count = random.randint(1, 50)
-        numvar = int(count) - 1
-        x = self.t.statuses.user_timeline(screen_name="realDonaldTrump", count=count, tweet_mode="extended")
+        num = int(count) - 1
+        data = self.t.statuses.user_timeline(screen_name="realDonaldTrump", count=count, tweet_mode="extended")
 
-        date_string = datetime.strptime(x[numvar]["created_at"], '%a %b %d %H:%M:%S %z %Y').replace(
+        date_string = datetime.strptime(data[num]["created_at"], '%a %b %d %H:%M:%S %z %Y').replace(
             tzinfo=timezone.utc).astimezone(tz=None).strftime('%I:%M:%S %m-%d-%y')
 
-        profile_image = x[0]["user"]["profile_image_url_https"]
-
         e = discord.Embed()
-        e.set_thumbnail(url=profile_image)
-        e.add_field(name=date_string, value=x[numvar]["full_text"], inline=True)
-        e.set_author(name=f'@{x[0]["user"]["screen_name"]}')
+        e.set_thumbnail(url=data[0]["user"]["profile_image_url"])
+        e.add_field(name=date_string, value=data[num]["full_text"], inline=True)
+        e.set_author(name=f'@{data[0]["user"]["screen_name"]}')
 
         async with ctx.typing():
             await asyncio.sleep(1)
