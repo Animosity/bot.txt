@@ -29,17 +29,21 @@ class CryptoTicker(commands.Cog):
             if error.param.name == 'newbase':
                 await ctx.send(f'```BASE_CURRENCY: {self.base_currency}\n'
                                f'command usage: basecurrency <currency>```')
+                print(f'[CryptoTicker Prompted]: {ctx.message.author}: basecurrency')
+                print('[CryptoTicker Returned]: basecurrency usage message')
 
         if isinstance(error, commands.MissingRequiredArgument):
             if error.param.name == 'ticker':
                 await ctx.send('```command usage: price <currency> [base_currency]```')
+                print(f'[CryptoTicker Prompted]: {ctx.message.author}: price')
+                print('[CryptoTicker Returned]: price usage message')
 
     @commands.command(pass_context=True)
     async def basecurrency(self, ctx, newbase):
+        print(f'[CryptoTicker Prompted]: {ctx.message.author}: basecurrency {newbase}')
         if newbase in self.supported_currencies:
             try:
                 self.bot.config["CRYPTOTICKER"]["BASE_CURRENCY"] = newbase.lower()
-
                 with open(self.bot.configpath, 'w') as updatedconfigfile:
                     json.dump(self.bot.config, updatedconfigfile, indent=2, sort_keys=False, ensure_ascii=False)
 
@@ -49,27 +53,28 @@ class CryptoTicker(commands.Cog):
                 async with ctx.typing():
                     await asyncio.sleep(1)
                     await ctx.send(f'Changing default base currency to {newbase.upper()}')
-                    print(f'[Reloading CryptoTicker] Config update: BASE_CURRENCY is now {newbase.upper()}')
+                    print(f'[CryptoTicker Reload]: Config update - BASE_CURRENCY is now {newbase.upper()}')
                     await ctx.message.add_reaction('\N{THUMBS UP SIGN}')
 
             except Exception as error:
                 async with ctx.typing():
                     await asyncio.sleep(1)
                     await ctx.send(f'basecurrency command returned with error: {error}')
-                    print(f'basecurrency command returned with error: {error}')
+                    print(f'[CryptoTicker Error]: basecurrency command returned with error: {error}')
                     await ctx.message.add_reaction('\N{THUMBS DOWN SIGN}')
-
         else:
             async with ctx.typing():
                 await asyncio.sleep(1)
                 await ctx.send(f'CryptoTicker Error: {newbase} is not a supported currency')
-                print(f'CryptoTicker Error: {newbase} is not a supported currency')
+                print(f'[CryptoTicker Error]: {newbase} is not a supported currency')
                 await ctx.message.add_reaction('\N{THUMBS DOWN SIGN}')
 
     @commands.command(pass_context=True)
     async def price(self, ctx, ticker, base=None):
         if base is None:
             base = self.base_currency
+
+        print(f'[CryptoTicker Prompted]: {ctx.message.author}: price {ticker} {base}')
 
         currency_symbol = currency_symbol_dict.get(base.upper(), '$')
 
@@ -90,6 +95,8 @@ class CryptoTicker(commands.Cog):
                 async with ctx.typing():
                     await asyncio.sleep(1)
                     await ctx.send(symbol.upper() + '/' + base.upper() + ': ' + currency_symbol + str(formatted_price))
+                    print(f'[CryptoTicker Returned]: {symbol.upper()}/{base.upper()}:'
+                          f' {currency_symbol}{str(formatted_price)}')
                     await ctx.message.add_reaction('\N{THUMBS UP SIGN}')
 
             except Exception as error:
@@ -103,6 +110,7 @@ class CryptoTicker(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(1)
                 await ctx.send(f'CryptoTicker error: {base} is not a supported currency')
+                print(f'[CryptoTicker Error]: User: {ctx.message.author} Error: {base} is not a supported currency')
                 await ctx.message.add_reaction('\N{THUMBS DOWN SIGN}')
 
 
