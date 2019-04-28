@@ -1,9 +1,7 @@
-import discord
 from discord.ext import commands
 from twitter import *
 import asyncio
 import random
-from datetime import datetime, timezone
 
 
 class TwitStream(commands.Cog):
@@ -23,7 +21,6 @@ class TwitStream(commands.Cog):
             count = 1
 
         print(f'[TwitStream Prompted]: {ctx.message.author}: twit {screen_name} {count}')
-
         if int(count) > 150:
             async with ctx.typing():
                 await asyncio.sleep(1)
@@ -31,20 +28,14 @@ class TwitStream(commands.Cog):
                 await ctx.message.add_reaction('\N{THUMBS DOWN SIGN}')
         else:
             num = int(count) - 1
-            data = self.t.statuses.user_timeline(screen_name=screen_name, count=count, tweet_mode="extended")
-            date_string = datetime.strptime(data[num]["created_at"], '%a %b %d %H:%M:%S %z %Y').replace(
-                tzinfo=timezone.utc).astimezone(tz=None).strftime('%I:%M:%S %m-%d-%y')
-            full_text = data[num]["full_text"].replace('&amp;', '&')
 
-            print(f'[TwitStream Returned]: @{data[0]["user"]["screen_name"]}: {full_text}')
-            e = discord.Embed()
-            e.set_thumbnail(url=data[0]["user"]["profile_image_url"])
-            e.add_field(name=date_string, value=full_text, inline=True)
-            e.set_author(name=f'@{data[0]["user"]["screen_name"]}')
+            data = self.t.statuses.user_timeline(screen_name=screen_name, count=count, tweet_mode="extended")
+            twit_id = data[num]["id"]
 
             async with ctx.typing():
                 await asyncio.sleep(1)
-                await ctx.send(embed=e)
+                await ctx.send(f'https://twitter.com/{screen_name}/status/{twit_id}')
+                print(f'[TwitStream Returned]: https://twitter.com/{screen_name}/status/{twit_id}')
                 await ctx.message.add_reaction('\N{THUMBS UP SIGN}')
 
     @commands.command(pass_context=True)
@@ -53,20 +44,13 @@ class TwitStream(commands.Cog):
         num = int(count) - 1
 
         print(f'[TwitStream Prompted]: {ctx.message.author}: trump')
+
         data = self.t.statuses.user_timeline(screen_name="realDonaldTrump", count=count, tweet_mode="extended")
-        date_string = datetime.strptime(data[num]["created_at"], '%a %b %d %H:%M:%S %z %Y').replace(
-            tzinfo=timezone.utc).astimezone(tz=None).strftime('%I:%M:%S %m-%d-%y')
-        full_text = data[num]["full_text"].replace('&amp;', '&')
-
-        print(f'[TwitStream Returned]: @{data[0]["user"]["screen_name"]}: {full_text}')
-        e = discord.Embed()
-        e.set_thumbnail(url=data[0]["user"]["profile_image_url"])
-        e.add_field(name=date_string, value=full_text, inline=True)
-        e.set_author(name=f'@{data[0]["user"]["screen_name"]}')
-
+        twit_id = data[num]["id"]
         async with ctx.typing():
             await asyncio.sleep(1)
-            await ctx.send(embed=e)
+            await ctx.send(f'https://twitter.com/realDonaldTrump/status/{twit_id}')
+            print(f'[TwitStream Returned]: https://twitter.com/realDonaldTrump/status/{twit_id}')
             await ctx.message.add_reaction('\N{THUMBS UP SIGN}')
 
 
