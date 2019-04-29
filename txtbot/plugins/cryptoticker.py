@@ -110,7 +110,7 @@ class CryptoTicker(commands.Cog):
                 async with ctx.typing():
                     await asyncio.sleep(1)
                     await ctx.send(f'price command returned with error: {error}')
-                    print(f'[CryptoTicker ERROR]: price command returned with error: {error}')
+                    print(f'[CryptoTicker Error]: price command returned with error: {error}')
                     await ctx.message.add_reaction('\N{THUMBS DOWN SIGN}')
         else:
             async with ctx.typing():
