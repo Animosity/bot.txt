@@ -16,7 +16,6 @@ class Overwatch(commands.Cog):
         ratings = {"TANK": "0", "DAMAGE": "0", "SUPPORT": "0"}
     
         for role in soup:
-            #print(role)
             tank_sr = role.find('div', attrs={'data-ow-tooltip-text': 'Tank Skill Rating'})
             if tank_sr: 
                 ratings["TANK"] = role.find('div', attrs={'class': 'competitive-rank-level'}).string
@@ -28,7 +27,6 @@ class Overwatch(commands.Cog):
             support_sr = role.find('div', attrs={'data-ow-tooltip-text': 'Support Skill Rating'})
             if support_sr:
                 ratings["SUPPORT"] = role.find('div', attrs={'class': 'competitive-rank-level'}).string
-            #print(f"{ratings}")
         return ratings
     
     @commands.command(pass_context=True)
