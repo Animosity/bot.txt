@@ -20,7 +20,7 @@ Flask-SQLAlchemy==2.3.2
 idna==2.8
 itsdangerous==1.1.0
 Jinja2==2.10.1
-Mako==1.0.9
+Mako==1.2.2
 MarkupSafe==1.1.1
 micawber==0.4.0
 multidict==4.5.2
